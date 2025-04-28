@@ -7,7 +7,74 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
-    
+        <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #1d4ed8;
+            color: white;
+            height: 100vh;
+            padding: 20px;
+        }
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        .sidebar a.active {
+            font-weight: bold;
+            background-color: #2563eb;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f9fafb;
+        }
+        .card {
+            background-color: #e5e7eb;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: inline-block;
+            border-radius: 8px;
+            margin-right: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #1d4ed8;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #1d4ed8;
+            color: white;
+        }
+        .add-button {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    </style>
+
 
     <!-- Google Charts Loader -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
