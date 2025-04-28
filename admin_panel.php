@@ -120,7 +120,40 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     <a href="?page=reports" class="<?= $page == 'reports' ? 'active' : '' ?>">📊 Reports</a>
     <a href="?page=settings" class="<?= $page == 'settings' ? 'active' : '' ?>">⚙️ Settings</a>
 </div>
-
+<div class="content">
+    <?php
+    if ($page == 'dashboard') {
+        echo "<h1>Dashboard</h1>";
+        echo "<div class='card'>Total Members: 50</div>";
+        echo "<div class='card'>Borrowed Equipment: 15</div>";
+        echo "<div class='card'>Announcements: 3</div>";
+        echo "<div id='combochart_div' style='width: 900px; height: 500px; margin-top: 30px;'></div>";
+    } elseif ($page == 'members') {
+        echo "<h1>Manage Members</h1>";
+        echo "<button class='add-button'>+ Add Member</button>";
+        echo "<table>";
+        echo "<tr><th>ID</th><th>NAME</th><th>EMAIL</th><th>ROLE</th><th>ACTION</th></tr>";
+        // Dummy data, you can replace with database records
+        echo "<tr><td>1</td><td>benz</td><td>benz@example.com</td><td>Member</td><td>Edit | Delete</td></tr>";
+        echo "<tr><td>2</td><td>bebe</td><td>ebeb@example.com</td><td>Member</td><td>Edit | Delete</td></tr>";
+        echo "</table>";
+    } elseif ($page == 'equipment') {
+        echo "<h1>Manage Equipment</h1>";
+        echo "<p>Equipment management module coming soon.</p>";
+    } elseif ($page == 'announcements') {
+        echo "<h1>Announcements</h1>";
+        echo "<p>Create and manage announcements here.</p>";
+    } elseif ($page == 'reports') {
+        echo "<h1>Reports</h1>";
+        echo "<p>View system reports here.</p>";
+    } elseif ($page == 'settings') {
+        echo "<h1>Settings</h1>";
+        echo "<p>Configure system settings here.</p>";
+    } else {
+        echo "<h1>Page not found.</h1>";
+    }
+    ?>
+</div>
 
 </body>
 </html>
