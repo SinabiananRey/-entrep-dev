@@ -7,7 +7,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 <head>
     <meta charset="UTF-8">
     <title>Admin Panel</title>
-        <style>
+    <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -41,6 +41,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             flex: 1;
             padding: 30px;
             background-color: #f9fafb;
+            overflow-y: auto;
         }
         .card {
             background-color: #e5e7eb;
@@ -70,13 +71,12 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             padding: 10px 15px;
             border: none;
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin-top: 10px;
             cursor: pointer;
         }
     </style>
 
-
-   <!-- Google Charts Loader -->
+    <!-- Google Charts Loader -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load('current', {'packages':['corechart']});
@@ -105,9 +105,6 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         chart.draw(data, options);
       }
     </script>
-
-      
-
 </head>
 <body>
 
@@ -120,6 +117,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
     <a href="?page=reports" class="<?= $page == 'reports' ? 'active' : '' ?>">📊 Reports</a>
     <a href="?page=settings" class="<?= $page == 'settings' ? 'active' : '' ?>">⚙️ Settings</a>
 </div>
+
 <div class="content">
     <?php
     if ($page == 'dashboard') {
@@ -133,19 +131,50 @@ $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
         echo "<button class='add-button'>+ Add Member</button>";
         echo "<table>";
         echo "<tr><th>ID</th><th>NAME</th><th>EMAIL</th><th>ROLE</th><th>ACTION</th></tr>";
-        // Dummy data, you can replace with database records
         echo "<tr><td>1</td><td>benz</td><td>benz@example.com</td><td>Member</td><td>Edit | Delete</td></tr>";
         echo "<tr><td>2</td><td>bebe</td><td>ebeb@example.com</td><td>Member</td><td>Edit | Delete</td></tr>";
         echo "</table>";
     } elseif ($page == 'equipment') {
         echo "<h1>Manage Equipment</h1>";
-        echo "<p>Equipment management module coming soon.</p>";
+        echo "<button class='add-button'>+ Add Equipment</button>";
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Name</th><th>Status</th><th>Actions</th></tr>";
+        echo "<tr><td>1</td><td>Basketball</td><td>Available</td><td>Edit | Delete</td></tr>";
+        echo "<tr><td>2</td><td>Volleyball Net</td><td>Borrowed</td><td>Edit | Delete</td></tr>";
+        echo "<tr><td>3</td><td>Whistle</td><td>Available</td><td>Edit | Delete</td></tr>";
+        echo "</table>";
     } elseif ($page == 'announcements') {
-        echo "<h1>Announcements</h1>";
-        echo "<p>Create and manage announcements here.</p>";
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['announcement'])) {
+            $announcement = strip_tags(trim($_POST['announcement']));
+            file_put_contents('announcements.txt', $announcement . PHP_EOL, FILE_APPEND);
+        }
+
+        echo "<div style='background-color: #e5e7eb; padding: 20px; border-radius: 10px; max-width: 700px;'>";
+        echo "<h2>Announcements</h2>";
+        echo "<form method='POST'>";
+        echo "<label><strong>Post New Announcement</strong></label><br>";
+        echo "<textarea name='announcement' rows='4' style='width:100%; border-radius:10px; margin-top:10px;'></textarea><br>";
+        echo "<button class='add-button' type='submit' style='margin-top:10px;'>📢 Post</button>";
+        echo "</form>";
+
+        if (file_exists('announcements.txt')) {
+            $lines = file('announcements.txt', FILE_IGNORE_NEW_LINES);
+            echo "<hr><h3>Previous Announcements:</h3><ul>";
+            foreach (array_reverse($lines) as $line) {
+                echo "<li>" . htmlspecialchars($line) . "</li>";
+            }
+            echo "</ul>";
+        }
+        echo "</div>";
     } elseif ($page == 'reports') {
         echo "<h1>Reports</h1>";
-        echo "<p>View system reports here.</p>";
+        echo "<h3>Borrowed Equipment Report</h3>";
+        echo "<table>";
+        echo "<tr><th>Equipment</th><th>Borrower</th><th>Date Borrowed</th><th>Return Date</th></tr>";
+        echo "<tr><td>Basketball</td><td>Benz tinga</td><td>March 15, 2025</td><td>March 20, 2025</td></tr>";
+        echo "<tr><td>Tennis Racket</td><td>Loren Dacol</td><td>March 18, 2025</td><td>March 25, 2025</td></tr>";
+        echo "</table>";
+        echo "<button class='add-button'>📥 Download Report</button>";
     } elseif ($page == 'settings') {
         echo "<h1>Settings</h1>";
         echo "<p>Configure system settings here.</p>";
